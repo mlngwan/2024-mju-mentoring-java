@@ -12,6 +12,9 @@ public class Person {
 
     public void addAge() {
         this.age++;
+        if (age>=30){
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getName() {
@@ -20,5 +23,11 @@ public class Person {
 
     public int getAge() {
         return age;
+    }
+
+    public String convertUptoLow(String beforeName){
+
+        beforeName = this.name.toLowerCase();
+        return beforeName;
     }
 }

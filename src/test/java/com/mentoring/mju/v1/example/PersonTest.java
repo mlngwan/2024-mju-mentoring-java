@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -52,21 +53,56 @@ class PersonTest {
      */
     @Test
     void 객체_생성시_이름에_들어오는_대문자는_모두_소문자로_변환한다() {
+
         // given
+        String upperName = "MLNGWAN";
+        String lowerName = "mlngwan";
+        int age = 27;
 
         // when
 
+        Person person2 = new Person(upperName, age);
+        person2.convertUptoLow(upperName);
+
         // then
+        assertSoftly(softly -> {
+            softly.assertThat(person2.convertUptoLow(upperName)).isEqualTo(lowerName);
+        });
+
+
+    }
+    @Test
+    void 소문자_오류_테스트() {
+
+        // given
+        String upperName = "MLNGWAN";
+        String lowerName = "mlngwan";
+        int age = 27;
+
+        // when
+
+        Person person2 = new Person(upperName, age);
+        person2.convertUptoLow(upperName);
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(person2.convertUptoLow(upperName)).isEqualTo(lowerName);
+        });
+
+
     }
 
     @Test
     void 나이가_30살이_넘어가면_예외를_발생시킨다() {
         // given
+        int age = 29;
+        String name = "mlngwan";
 
         // when
+        Person person3 = new Person(name, age);
 
         // then
-//        assertThatThrownBy(() -> person.addAge())
-//                .isInstanceOf(예외.class);
+        assertThatThrownBy(() -> person3.addAge())
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
